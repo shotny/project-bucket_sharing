@@ -6,11 +6,11 @@ public class ItemResponseDto {
 
     private Long id;
     private String content;
-    private boolean check;
+    private boolean checked;
 
     public ItemResponseDto(Items entity) {
         this.id = entity.getId();
         this.content = entity.getContent();
-        this.check = entity.isCheck();
+        this.checked = entity.isChecked();
     }
 }

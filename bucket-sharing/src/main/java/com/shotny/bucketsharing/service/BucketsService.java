@@ -23,17 +23,9 @@ public class BucketsService {
 
     // 장바구니 생성
     public void addBucket(Long memberId, BucketSaveDto dto) {
-
         Members member = findMember(memberId);
-        Buckets bucket = bucketsRepository.save(dto.toEntity());
-        BucketMembers bucketMembers = bucketMembersRepository.save(new BucketMembers());
-
-        bucket.setBucketMembers(bucketMembers);
-        bucket.setOwner(member);
-        bucketsRepository.save(bucket);
-
-        member.setBucketMembers(bucketMembers);
-        membersRepository.save(member);
+        Buckets bucket = bucketsRepository.save(dto.toEntity(memberId));
+        BucketMembers bucketMembers = bucketMembersRepository.save(new BucketMembers(member, bucket));
     }
 
 
@@ -64,13 +56,13 @@ public class BucketsService {
 
 
     // 공유중인 이용자 목록 조회
-    public void findUsingMembers(Long bucketId) {
-        Buckets bucket = findBucket(bucketId);
-        Long bucketMembersId = bucket.getBucketMembers().getId();
-        List<Members> bucketMembers = membersRepository.findByBucketMembersId(bucketMembersId);
-
-        // 리턴 어떤 값으로 할지 결정
-    }
+//    public void findUsingMembers(Long bucketId) {
+//        Buckets bucket = findBucket(bucketId);
+//        Long bucketMembersId = bucket.getBucketMembers().getId();
+//        List<Members> bucketMembers = membersRepository.findByBucketMembersId(bucketMembersId);
+//
+//        // 리턴 어떤 값으로 할지 결정
+//    }
 
 // + 장바구니 다른 사람에게 공유
 

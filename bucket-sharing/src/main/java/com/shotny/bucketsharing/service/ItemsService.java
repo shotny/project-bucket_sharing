@@ -4,8 +4,9 @@ import com.shotny.bucketsharing.domain.buckets.Buckets;
 import com.shotny.bucketsharing.domain.buckets.BucketsRepository;
 import com.shotny.bucketsharing.domain.items.Items;
 import com.shotny.bucketsharing.domain.items.ItemsRepository;
-import com.shotny.bucketsharing.domain.items.dto.ItemRequestDto;
+import com.shotny.bucketsharing.domain.items.dto.ItemSaveDto;
 import com.shotny.bucketsharing.domain.items.dto.ItemResponseDto;
+import com.shotny.bucketsharing.domain.items.dto.ItemUpdateDto;
 import lombok.RequiredArgsConstructor;
 
 import java.util.ArrayList;
@@ -13,22 +14,22 @@ import java.util.List;
 
 @RequiredArgsConstructor
 public class ItemsService {
+
     private final ItemsRepository itemsRepository;
     private final BucketsRepository bucketsRepository;
 
 
-    public void saveItem(Long bucketId, ItemRequestDto dto) {
+    public void saveItem(Long bucketId, ItemSaveDto dto) {
         Buckets bucket = findBucket(bucketId);
-        Items items = dto.toEntity();
-        items.setBucket(bucket);
-        itemsRepository.save(items);
+        Items item = dto.toEntity(bucket);
+        itemsRepository.save(item);
 
         bucket.countUpItem();
         bucketsRepository.save(bucket);
     }
 
 
-    public void updateItem(Long id, ItemRequestDto dto) {
+    public void updateItem(Long id, ItemUpdateDto dto) {
         Items item = findItem(id);
         item.updateContent(dto.getContent());
         itemsRepository.save(item);
@@ -41,17 +42,21 @@ public class ItemsService {
         itemsRepository.save(item);
 
         Buckets bucket = findBucket(item.getBucket().getId());
-        bucket.updateChecked(item.isCheck());
+        bucket.updateChecked(item.isChecked());
         bucketsRepository.save(bucket);
     }
 
 
     public void deleteItem(Long id) {
         Items item = findItem(id);
-        itemsRepository.delete(item);
-
         Buckets bucket = findBucket(item.getBucket().getId());
+
         bucket.countDownItem();
+        if (item.isChecked()) {
+            bucket.updateChecked(false);
+        }
+
+        itemsRepository.delete(item);
         bucketsRepository.save(bucket);
     }
 
