@@ -3,12 +3,12 @@ package com.shotny.bucketsharing.domain;
 import com.shotny.bucketsharing.domain.buckets.Buckets;
 import com.shotny.bucketsharing.domain.members.Members;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
-import java.util.ArrayList;
-import java.util.List;
 
 @Getter
+@NoArgsConstructor
 @Entity
 public class BucketMembers {
 
@@ -16,12 +16,16 @@ public class BucketMembers {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-//    @Column
-//    private int memberCount;
+    @ManyToOne
+    @JoinColumn(name = "bucket_id")
+    private Buckets bucket;
 
-    @OneToMany(mappedBy = "bucketMembers")
-    private List<Buckets> bucket = new ArrayList<>();
+    @ManyToOne
+    @JoinColumn(name = "member_id")
+    private Members members;
 
-    @OneToMany(mappedBy = "bucketMembers")
-    private List<Members> members = new ArrayList<>();
+    public BucketMembers(Members member, Buckets bucket) {
+        this.members = member;
+        this.bucket = bucket;
+    }
 }

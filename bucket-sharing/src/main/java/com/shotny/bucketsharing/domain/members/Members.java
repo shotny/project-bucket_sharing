@@ -1,12 +1,17 @@
 package com.shotny.bucketsharing.domain.members;
 
 import com.shotny.bucketsharing.domain.BucketMembers;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 
 @Getter
 @Entity
+@NoArgsConstructor
 public class Members {
 
     @Id
@@ -19,11 +24,6 @@ public class Members {
     @Column
     private int bucketsCount;
 
-    @ManyToOne
-    @JoinColumn(name = "bucketMembersId")
-    private BucketMembers bucketMembers;
-
-    public void setBucketMembers(BucketMembers bucketMembers) {
-        this.bucketMembers = bucketMembers;
-    }
+    @OneToMany(mappedBy = "members")
+    private List<BucketMembers> bucketMembers = new ArrayList<>();
 }

@@ -5,11 +5,14 @@ import com.shotny.bucketsharing.domain.items.Items;
 import com.shotny.bucketsharing.domain.members.Members;
 import lombok.Builder;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.List;
 
 @Getter
+@NoArgsConstructor
 @Entity
 public class Buckets {
 
@@ -19,6 +22,9 @@ public class Buckets {
 
     @Column
     private String name;
+
+    @Column
+    private Long ownerId;
 
     @Column
     private int itemCount;
@@ -32,26 +38,19 @@ public class Buckets {
     @OneToMany(mappedBy = "bucket")
     private List<Items> itemsList;
 
-//    @OneToOne
-    @Column
-    private Members owner;
+    @OneToMany(mappedBy = "bucket")
+    private List<BucketMembers> bucketMembers = new ArrayList<>();
 
-    @ManyToOne
-    @JoinColumn(name = "bucketId")
-    private BucketMembers bucketMembers;
 
     @Builder
-    public Buckets(String name) {
+    public Buckets(String name, Long ownerId) {
         this.name = name;
+        this.ownerId = ownerId;
+        this.memberCount = 1;
     }
 
-    public void setBucketMembers(BucketMembers bucketMember) {
-        this.bucketMembers = bucketMember;
-    }
-
-    public void setOwner(Members member) {
-        this.owner = member;
-        ++this.memberCount;
+    public void updateMemberCount(boolean countUp) {
+        this.memberCount = countUp ? ++this.memberCount : --this.memberCount;
     }
 
     public void updateName(String name) {

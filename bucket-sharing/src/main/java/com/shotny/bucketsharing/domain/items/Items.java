@@ -3,10 +3,12 @@ package com.shotny.bucketsharing.domain.items;
 import com.shotny.bucketsharing.domain.buckets.Buckets;
 import lombok.Builder;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 
 @Getter
+@NoArgsConstructor
 @Entity
 public class Items {
 
@@ -18,30 +20,28 @@ public class Items {
     private String content;
 
     @Column
-    private boolean check;
+    private boolean checked;
 
     @ManyToOne
     @JoinColumn(name = "bucketId")
     private Buckets bucket;
 
-    @Builder
-    public Items(String content) {
-        this.content = content;
-    }
 
-    public void setBucket(Buckets bucket) {
+    @Builder
+    public Items(String content, Buckets bucket) {
+        this.content = content;
         this.bucket = bucket;
     }
+
+//    public void setBucket(Buckets bucket) {
+//        this.bucket = bucket;
+//    }
 
     public void updateContent(String content) {
         this.content = content;
     }
 
-    public boolean updateCheck() {
-        check = check ? false : true;
-//        if (check) {
-//            check = false;
-//        } else check = true;
-        return check;
+    public void updateCheck() {
+        this.checked = this.checked ? false : true;
     }
 }
