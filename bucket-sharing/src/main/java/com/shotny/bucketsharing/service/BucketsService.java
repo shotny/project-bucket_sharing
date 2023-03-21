@@ -24,10 +24,13 @@ public class BucketsService {
     private final BucketMembersRepository bucketMembersRepository;
 
     // 장바구니 생성
-    public void addBucket(Long memberId, BucketSaveDto dto) {
-        Members member = findMember(memberId);
+    public Buckets saveBucket(Long memberId, BucketSaveDto dto) {
         Buckets bucket = bucketsRepository.save(dto.toEntity(memberId));
-        BucketMembers bucketMembers = bucketMembersRepository.save(new BucketMembers(member, bucket));
+        Members member = findMember(memberId);
+        member.updateBucket(true);
+        membersRepository.save(member);
+        bucketMembersRepository.save(new BucketMembers(member, bucket));
+        return bucket;
     }
 
 
