@@ -10,10 +10,12 @@ import com.shotny.bucketsharing.domain.buckets.dto.BucketNameUpdateDto;
 import com.shotny.bucketsharing.domain.buckets.dto.BucketResponseDto;
 import com.shotny.bucketsharing.domain.buckets.dto.BucketSaveDto;
 import lombok.RequiredArgsConstructor;
+import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
 
+@Service
 @RequiredArgsConstructor
 public class BucketsService {
 
