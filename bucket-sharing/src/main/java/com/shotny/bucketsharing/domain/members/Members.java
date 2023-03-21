@@ -26,4 +26,12 @@ public class Members {
 
     @OneToMany(mappedBy = "members")
     private List<BucketMembers> bucketMembers = new ArrayList<>();
+
+    public Members(String name) {
+        this.name = name;
+    }
+
+    public void updateBucket(boolean isCountUp) {
+        this.bucketsCount = isCountUp ? ++this.bucketsCount : --bucketsCount;
+    }
 }

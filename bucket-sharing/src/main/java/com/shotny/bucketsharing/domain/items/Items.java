@@ -22,8 +22,8 @@ public class Items {
     @Column
     private boolean checked;
 
-    @ManyToOne
-    @JoinColumn(name = "bucketId")
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "bucket_id")
     private Buckets bucket;
 
 

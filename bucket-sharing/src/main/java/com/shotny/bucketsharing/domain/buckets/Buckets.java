@@ -35,10 +35,10 @@ public class Buckets {
     @Column
     private int memberCount;
 
-    @OneToMany(mappedBy = "bucket")
-    private List<Items> itemsList;
+    @OneToMany(mappedBy = "bucket", cascade = CascadeType.ALL)
+    private List<Items> itemsList = new ArrayList<>();
 
-    @OneToMany(mappedBy = "bucket")
+    @OneToMany(mappedBy = "bucket", cascade = CascadeType.ALL)
     private List<BucketMembers> bucketMembers = new ArrayList<>();
 
 

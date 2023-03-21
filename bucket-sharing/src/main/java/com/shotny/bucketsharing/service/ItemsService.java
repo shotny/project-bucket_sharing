@@ -8,24 +8,28 @@ import com.shotny.bucketsharing.domain.items.dto.ItemSaveDto;
 import com.shotny.bucketsharing.domain.items.dto.ItemResponseDto;
 import com.shotny.bucketsharing.domain.items.dto.ItemUpdateDto;
 import lombok.RequiredArgsConstructor;
+import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
 
 @RequiredArgsConstructor
+@Service
 public class ItemsService {
 
     private final ItemsRepository itemsRepository;
     private final BucketsRepository bucketsRepository;
 
 
-    public void saveItem(Long bucketId, ItemSaveDto dto) {
+    public Items saveItem(Long bucketId, ItemSaveDto dto) {
         Buckets bucket = findBucket(bucketId);
         Items item = dto.toEntity(bucket);
-        itemsRepository.save(item);
+        Items saved = itemsRepository.save(item);
 
         bucket.countUpItem();
         bucketsRepository.save(bucket);
+
+        return saved;
     }
 
 
