@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <title>장바구니 공유 서비스, 동상이물</title>
-    <link href="./styles/bucket-items.css" rel="stylesheet">
+    <link href="./styles/bucket-edit.css" rel="stylesheet">
 </head>
 <body>
     <div class="background">
@@ -30,7 +30,7 @@
                     <div class="wrapper_blank"></div>
                     
                     <div class="bucket_header">
-                        <div class="bucket_name">Bucket 1</div>
+                        <div class="bucket_name"> <input class="bucket_name_info" type="text" placeholder="Bucket1"> </div>
                         <div class="bucket_count">
                             <span id="checked">3</span> <span> of </span> <span id="total">12</span>
                         </div>
@@ -40,50 +40,35 @@
 
                     <div class="bucket_body">
                         <div class="item_new">
-                            <div class="item_info_box"><input class="item_input" type="text" placeholder="구매할 물건을 추가해주세요."></div>
-                            <div class="item_new_button">등록</div>
+                            <div class="item_info_box"></div>
                         </div>
                         <div class="bucket_items">
                             <div class="checked"><input type="checkbox"></div>
                             <div class="item_content">바나나</div>
-                            <div class="item_button_box">
-                                <div class="item_button" id="item_edit">수정</div>
-                                <div class="button_partition"></div>
-                                <div class="item_button" id="item_delete">삭제</div>
-                            </div>
+
                         </div>
 
                         <div class="bucket_items">
                             <div class="checked"><input type="checkbox"></div>
                             <div class="item_content">바나나</div>
-                            <div class="item_button_box">
-                                <div class="item_button" id="item_edit">수정</div>
-                                <div class="button_partition"></div>
-                                <div class="item_button" id="item_delete">삭제</div>
-                            </div>
                         </div>
 
                         <div class="bucket_items">
                             <div class="checked"><input type="checkbox"></div>
                             <div class="item_content">바나나</div>
-                            <div class="item_button_box">
-                                <div class="item_button" id="item_edit">수정</div>
-                                <div class="button_partition"></div>
-                                <div class="item_button" id="item_delete">삭제</div>
-                            </div>
                         </div>
                     </div>
 
                     <div class="bucket_user">
-                        <div class="user">user1</div>
-                        <div class="user">호루롹휘 </div>
+                        <div class="user">user1 <button class="user_delete_button">x</button></div>
+                        <div class="user">호루롹휘 <button class="user_delete_button">x</button></div>
                         <div class="bucket_share_button"><button class="share_button">SHARE</button></div>
                     </div>
                 </div>
                 <div class="bucket_footer">
-                    <div class="bucket_button" id="bucket_share_button">SHARE</div>
+                    <div class="bucket_button" id="bucket_share_button">SAVE</div>
                     <div class="bucket_button_partition"></div>
-                    <div class="bucket_button" id="bucket_edit_button">EDIT</div>
+                    <div class="bucket_button" id="bucket_edit_button">DELETE</div>
                 </div>
             </div>
         </div>
