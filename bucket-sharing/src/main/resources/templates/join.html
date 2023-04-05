@@ -1,9 +1,11 @@
 <!DOCTYPE html>
-<html lang="ko">
+<html xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <title>장바구니 공유 서비스, 동상이물</title>
-    <link href="./css/join.css" rel="stylesheet">
+    <link href="../static/css/join.css"
+          th:href="@{/css/join.css}"
+          rel="stylesheet">
 </head>
 <body>
 <div class="background">
@@ -31,7 +33,7 @@
             <div class="join_content">
                 <div class="content_title">닉네임</div>
                 <div class="content_input">
-                    <input id="email" class ="info_id_box" type="text" placeholder="닉네임을 입력해주세요.">
+                    <input id="email" class ="info_id_box" type="text" placeholder=" 닉네임을 입력해주세요.">
                     <div class="id_check">중복확인</div>
                 </div>
             </div>
@@ -39,14 +41,14 @@
             <div class="join_content">
                 <div class="content_title">비밀번호</div>
                 <div class="content_input">
-                    <input id="pwd" class ="info_box" type="text" placeholder="비밀번호를 입력해주세요.">
+                    <input id="pwd" class ="info_box" type="text" placeholder=" 비밀번호를 입력해주세요.">
                 </div>
             </div>
 
             <div class="join_content">
                 <div class="content_title">비밀번호 확인</div>
                 <div class="content_input">
-                    <input id="pwd_check" class ="info_box" type="text" placeholder="비밀번호를 입력해주세요.">
+                    <input id="pwd_check" class ="info_box" type="text" placeholder=" 비밀번호를 입력해주세요.">
                 </div>
             </div>
 
