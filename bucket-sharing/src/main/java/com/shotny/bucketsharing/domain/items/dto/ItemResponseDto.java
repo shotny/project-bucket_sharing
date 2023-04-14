@@ -1,7 +1,11 @@
 package com.shotny.bucketsharing.domain.items.dto;
 
 import com.shotny.bucketsharing.domain.items.Items;
+import lombok.*;
 
+@Getter
+@Setter
+@NoArgsConstructor
 public class ItemResponseDto {
 
     private Long id;

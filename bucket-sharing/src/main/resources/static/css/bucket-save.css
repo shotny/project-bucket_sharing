@@ -3,6 +3,10 @@
     margin: 0;
 }
 
+.button{
+    appearance: none;
+}
+
 .background{
     width: 100%;
     margin: 0;
@@ -41,6 +45,9 @@
     font-size: 20px;
     font-weight: 600;
     color: #BFBFBF;
+
+    border: none;
+    background: none;
 }
 
 .wrapper_blank{
@@ -84,6 +91,7 @@
 
 ::placeholder {
     color: #E8E8E8;
+    /* color: orange; */
 }
 
 /*  */
@@ -148,7 +156,14 @@
 .bucket_button{
     height: 40px;
     line-height: 40px;
+    border: none;
+    background: none;
     font-size: 18px;
     font-weight: 700px;
     color: white;
+}
+
+.bucket_button:hover{
+    font-size: 20px;
+    font-weight: 900px;
 }

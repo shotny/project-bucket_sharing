@@ -2,7 +2,6 @@ package com.shotny.bucketsharing.domain.buckets;
 
 import com.shotny.bucketsharing.domain.BucketMembers;
 import com.shotny.bucketsharing.domain.items.Items;
-import com.shotny.bucketsharing.domain.members.Members;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;

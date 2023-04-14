@@ -2,8 +2,8 @@ package com.shotny.bucketsharing.service;
 
 import com.shotny.bucketsharing.domain.BucketMembers;
 import com.shotny.bucketsharing.domain.BucketMembersRepository;
-import com.shotny.bucketsharing.domain.members.Members;
-import com.shotny.bucketsharing.domain.members.MembersRepository;
+import com.shotny.bucketsharing.domain.member.Member;
+import com.shotny.bucketsharing.domain.member.MemberRepository;
 import com.shotny.bucketsharing.domain.buckets.Buckets;
 import com.shotny.bucketsharing.domain.buckets.BucketsRepository;
 import com.shotny.bucketsharing.domain.buckets.dto.BucketNameUpdateDto;
@@ -19,16 +19,16 @@ import java.util.List;
 @RequiredArgsConstructor
 public class BucketsService {
 
-    private final MembersRepository membersRepository;
+    private final MemberRepository memberRepository;
     private final BucketsRepository bucketsRepository;
     private final BucketMembersRepository bucketMembersRepository;
 
     // 장바구니 생성
     public Buckets saveBucket(Long memberId, BucketSaveDto dto) {
         Buckets bucket = bucketsRepository.save(dto.toEntity(memberId));
-        Members member = findMember(memberId);
+        Member member = findMember(memberId);
         member.updateBucket(true);
-        membersRepository.save(member);
+        memberRepository.save(member);
         bucketMembersRepository.save(new BucketMembers(member, bucket));
         return bucket;
     }
@@ -64,15 +64,15 @@ public class BucketsService {
 //    public void findUsingMembers(Long bucketId) {
 //        Buckets bucket = findBucket(bucketId);
 //        Long bucketMembersId = bucket.getBucketMembers().getId();
-//        List<Members> bucketMembers = membersRepository.findByBucketMembersId(bucketMembersId);
+//        List<Member> bucketMembers = memberRepository.findByBucketMembersId(bucketMembersId);
 //
 //        // 리턴 어떤 값으로 할지 결정
 //    }
 
 // + 장바구니 다른 사람에게 공유
 
-    public Members findMember(Long memberId) {
-        Members member = membersRepository.findById(memberId).orElseThrow(
+    public Member findMember(Long memberId) {
+        Member member = memberRepository.findById(memberId).orElseThrow(
                 () -> new IllegalArgumentException("해당 회원이 존재하지 않습니다. id: " + memberId));
         return member;
     }

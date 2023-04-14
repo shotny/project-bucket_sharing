@@ -1,37 +1,46 @@
-package com.shotny.bucketsharing.domain.members;
+package com.shotny.bucketsharing.domain.member;
 
 import com.shotny.bucketsharing.domain.BucketMembers;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
 
+@NoArgsConstructor
 @Getter
 @Entity
-@NoArgsConstructor
-public class Members {
+public class Member {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column
+    @Column//(unique = true, nullable = false, length = 50)
     private String name;
+
+    @Column
+    private String password;
 
     @Column
     private int bucketsCount;
 
-    @OneToMany(mappedBy = "members")
+    @OneToMany(mappedBy = "member")
     private List<BucketMembers> bucketMembers = new ArrayList<>();
 
-    public Members(String name) {
+    public Member(String name) {
         this.name = name;
+    }
+
+    @Builder
+    public Member(String name, String password) {
+        this.name = name;
+        this.password = password;
     }
 
     public void updateBucket(boolean isCountUp) {
         this.bucketsCount = isCountUp ? ++this.bucketsCount : --bucketsCount;
     }
+
+
 }

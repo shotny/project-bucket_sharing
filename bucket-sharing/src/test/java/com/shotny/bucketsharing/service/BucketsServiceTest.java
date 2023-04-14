@@ -6,8 +6,8 @@ import com.shotny.bucketsharing.domain.buckets.BucketsRepository;
 import com.shotny.bucketsharing.domain.buckets.dto.BucketNameUpdateDto;
 import com.shotny.bucketsharing.domain.buckets.dto.BucketResponseDto;
 import com.shotny.bucketsharing.domain.buckets.dto.BucketSaveDto;
-import com.shotny.bucketsharing.domain.members.Members;
-import com.shotny.bucketsharing.domain.members.MembersRepository;
+import com.shotny.bucketsharing.domain.member.Member;
+import com.shotny.bucketsharing.domain.member.MemberRepository;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Test;
@@ -19,7 +19,8 @@ import java.util.List;
 @SpringBootTest
 class BucketsServiceTest {
 
-    @Autowired MembersRepository membersRepository;
+    @Autowired
+    MemberRepository memberRepository;
     @Autowired BucketsRepository bucketsRepository;
     @Autowired BucketsService bucketsService;
     @Autowired BucketMembersRepository bucketMembersRepository;
@@ -27,13 +28,13 @@ class BucketsServiceTest {
     @AfterEach
     void clearAll() {
         bucketsRepository.deleteAll();
-        membersRepository.deleteAll();
+        memberRepository.deleteAll();
     }
 
     @Test
     void 장바구니생성() {
         //given
-        Members member = membersRepository.save(new Members("member1"));
+        Member member = memberRepository.save(new Member("member1"));
 
         //when
         Buckets bucket = bucketsService.saveBucket(member.getId(), new BucketSaveDto("bucket1"));
@@ -46,7 +47,7 @@ class BucketsServiceTest {
     @Test
     void 장바구니명_수정() {
         //given
-        Members member = membersRepository.save(new Members("member1"));
+        Member member = memberRepository.save(new Member("member1"));
         Buckets bucket = bucketsRepository.save(new BucketSaveDto("bucket1").toEntity(member.getId()));
 
         //when
@@ -61,7 +62,7 @@ class BucketsServiceTest {
     @Test
     void 모든장바구니_조회() {
         //given
-        Members member = membersRepository.save(new Members("member1"));
+        Member member = memberRepository.save(new Member("member1"));
         Buckets bucket1 = bucketsRepository.save(new BucketSaveDto("bucket1").toEntity(member.getId()));
         Buckets bucket2 = bucketsRepository.save(new BucketSaveDto("bucket2").toEntity(member.getId()));
         Buckets bucket3 = bucketsRepository.save(new BucketSaveDto("bucket3").toEntity(member.getId()));
@@ -76,7 +77,7 @@ class BucketsServiceTest {
     @Test
     void 장바구니_삭제() {
         //given
-        Members member = membersRepository.save(new Members("member1"));
+        Member member = memberRepository.save(new Member("member1"));
         Buckets bucket1 = bucketsRepository.save(new BucketSaveDto("bucket1").toEntity(member.getId()));
         Buckets bucket2 = bucketsRepository.save(new BucketSaveDto("bucket2").toEntity(member.getId()));
 
@@ -91,7 +92,7 @@ class BucketsServiceTest {
 //    @Test
 //    void 공유중인멤버_조회() {
 //        //given
-//        Members member = new Members();
+//        Member member = new Member();
 //
 //        //when
 //
@@ -103,7 +104,7 @@ class BucketsServiceTest {
 //        @Test
 //    void 체크된아이템_조회() {
 //        //given
-//        Members member = membersRepository.save(new Members("member1"));
+//        Member member = memberRepository.save(new Member("member1"));
 //        Buckets bucket = bucketsRepository.save(new BucketSaveDto("bucket1").toEntity(member.getId()));
 //        Items saved1 = itemsService.saveItem(bucket.getId(), new ItemSaveDto("checked item1"));
 //        Items saved2 = itemsService.saveItem(bucket.getId(), new ItemSaveDto("checked item2"));

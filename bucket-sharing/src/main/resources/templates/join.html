@@ -26,34 +26,41 @@
 
         <div class="wrapper_blank"></div>
 
-        <div class="wrapper_body">
+<!--        <div class="wrapper_body">-->
+            <form class="wrapper_body"
+                  action="login.html"
+                  th:action
+                  method="post">
+                <div class="join">회원가입</div>
 
-            <div class="join">회원가입</div>
-
-            <div class="join_content">
-                <div class="content_title">닉네임</div>
-                <div class="content_input">
-                    <input id="email" class ="info_id_box" type="text" placeholder=" 닉네임을 입력해주세요.">
-                    <div class="id_check">중복확인</div>
+                <div class="join_content">
+                    <div class="content_title">닉네임</div>
+                    <div class="content_input">
+                        <input type="text" id="name" name="name" class ="info_id_box" placeholder=" 닉네임을 입력해주세요.">
+                        <div class="id_check">중복확인</div>
+                    </div>
                 </div>
-            </div>
 
-            <div class="join_content">
-                <div class="content_title">비밀번호</div>
-                <div class="content_input">
-                    <input id="pwd" class ="info_box" type="text" placeholder=" 비밀번호를 입력해주세요.">
+                <div class="join_content">
+                    <div class="content_title">비밀번호</div>
+                    <div class="content_input">
+                        <input type="text" id="password" name="password" class ="info_box" placeholder=" 비밀번호를 입력해주세요.">
+                    </div>
                 </div>
-            </div>
 
-            <div class="join_content">
-                <div class="content_title">비밀번호 확인</div>
-                <div class="content_input">
-                    <input id="pwd_check" class ="info_box" type="text" placeholder=" 비밀번호를 입력해주세요.">
+                <div class="join_content">
+                    <div class="content_title">비밀번호 확인</div>
+                    <div class="content_input">
+                        <input type="text" id="passwordCheck" name="passwordCheck" class ="info_box" placeholder=" 비밀번호를 입력해주세요.">
+                    </div>
                 </div>
-            </div>
 
-            <div class="join_button" id="join_button">회원가입</div>
-        </div>
+            <button type="button" class="join_button"
+                    id="join_button"
+                    onclick="location.href='login.html'"
+                    th:onclick="|location.href='@{/login}'|">회원가입</button>
+            </form>
+<!--        </div>-->
 
     </div>
 </div>

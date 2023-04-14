@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <title>장바구니 공유 서비스, 동상이물</title>
@@ -26,12 +26,17 @@
 
         <div class="wrapper_body">
 
-            <div class="bucket">
+            <div class="bucket"
+                 th:each="bucket : ${buckets}"
+                 onclick="location.href='bucket-items.html'"
+                 th:onclick="|location.href='@{|/v1/buckets/${bucket.id}/items|}'|">
                 <div class="bucket_name">
-                    <span>Bucket 1</span>
+                    <span id="bucketName" th:text="${bucket.name}">Bucket 1</span>
                 </div>
                 <div class="bucket_count">
-                    <span id="checked">3</span> <span> of </span> <span id="total">12</span>
+                    <span id="checked" th:text="${bucket.checked}">3</span>
+                    <span> of </span>
+                    <span id="total" th:text="${bucket.itemCount}">12</span>
                 </div>
                 <div class="bucket_sharing">
                     <!-- <div class="sharing_count"></div> -->
@@ -41,12 +46,17 @@
                 </div>
             </div>
 
-            <div class="no_bucket">
-                <div class="no_bucket_name">
-                    <span>create <br>new Bucket</span>
-                </div>
+<!--            <div class="no_bucket">-->
+                <button class="new_bucket_button"
+                        onclick="location.href='bucket-save.html'"
+                        th:onclick="|location.href='@{/v1/buckets/new}'|"
+                        type="button">
+<!--                    <div class="no_bucket_name">-->
+                        <span>create<br>new Bucket</span>
+<!--                    </div>-->
+                </button>
 
-            </div>
+<!--            </div>-->
 
         </div>
         <div class="wrpper_footer"></div>

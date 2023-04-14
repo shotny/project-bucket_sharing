@@ -20,18 +20,28 @@
                 <span>동상이물</span>
             </div>
             <div class="header_right">
-                <div class="header_button" id="header_button">Home</div>
+<!--                <div class="header_button" id="header_button">Home</div>-->
+                <button class="header_button" id="header_button"
+                        onclick="location.href='buckets.html'"
+                        th:onclick="|location.href='@{/v1/buckets}'|"
+                        type="button">Home</button>
             </div>
         </div>
 
         <div class="wrapper_blank"></div>
         <div class="wrapper_blank"></div>
 
-        <div class="wrapper_body">
+        <form class="wrapper_body"
+              action="bucket-items.html"
+              th:action
+              method="post">
             <div class="bucket">
                 <div class="wrapper_blank"></div>
                 <div class="bucket_header">
-                    <div class="bucket_name"> <input class="bucket_name_info" type="text" placeholder="이름을 입력하세요"> </div>
+
+                    <div class="bucket_name">
+                        <input name="name" type="text" class="bucket_name_info" placeholder="이름을 입력하세요">
+                    </div>
                 </div>
 
                 <div class="wrapper_blank"></div>
@@ -56,9 +66,9 @@
             </div>
 
             <div class="bucket_footer">
-                <div class="bucket_button" id="bucket_share_button">CREATE</div>
+                <button class="bucket_button" id="bucket_share_button" type="submit">CREATE</button>
             </div>
-        </div>
+        </form>
     </div>
 </div>
 </body>

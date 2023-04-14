@@ -1,7 +1,7 @@
 package com.shotny.bucketsharing.domain;
 
 import com.shotny.bucketsharing.domain.buckets.Buckets;
-import com.shotny.bucketsharing.domain.members.Members;
+import com.shotny.bucketsharing.domain.member.Member;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
@@ -16,16 +16,16 @@ public class BucketMembers {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "bucket_id")
     private Buckets bucket;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "member_id")
-    private Members members;
+    private Member member;
 
-    public BucketMembers(Members member, Buckets bucket) {
-        this.members = member;
+    public BucketMembers(Member member, Buckets bucket) {
+        this.member = member;
         this.bucket = bucket;
     }
 }

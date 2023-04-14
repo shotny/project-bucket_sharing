@@ -19,16 +19,20 @@ repositories {
 }
 
 dependencies {
+	implementation 'org.springframework.boot:spring-boot-starter'
+	implementation 'org.springframework.boot:spring-boot-starter-web'
+	implementation 'org.springframework.boot:spring-boot-starter-thymeleaf'
+	compileOnly 'org.projectlombok:lombok'
+	annotationProcessor 'org.projectlombok:lombok'
 
 	//spring data JPA, h2
 	implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
 	implementation 'com.h2database:h2'
 
-	implementation 'org.springframework.boot:spring-boot-starter-thymeleaf'
-	implementation 'org.springframework.boot:spring-boot-starter-web'
-
-	compileOnly 'org.projectlombok:lombok'
-	annotationProcessor 'org.projectlombok:lombok'
+	//spring security, jwt
+	implementation 'org.springframework.boot:spring-boot-starter-security'
+	testImplementation group: 'org.springframework.security', name: 'spring-security-test'
+	implementation group:'io.jsonwebtoken', name:'jjwt', version:'0.9.1'
 
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
 }
