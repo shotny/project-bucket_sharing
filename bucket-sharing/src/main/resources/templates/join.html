@@ -6,6 +6,45 @@
     <link href="../static/css/join.css"
           th:href="@{/css/join.css}"
           rel="stylesheet">
+
+    <script src="https://code.jquery.com/jquery-3.6.0.js" integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk=" crossorigin="anonymous"></script>
+    <script th:inline="javascript">
+
+        function nameCheck(){
+            var name = document.getElementById("name").value;
+            if(name == ""){
+                alert("사용하실 닉네임을 입력해주세요.");
+            }
+            $.ajax({
+                type: "POST",
+                url: "/v1/members/nameCheck",
+                data : {"name" : name},
+
+                success: function (result) {
+                    if(result == true){
+                        alert("사용 가능한 이름입니다.");
+                    } else {
+                        alert(name + ": 이미 사용중인 이름입니다.\n 다른 이름을 사용해주세요.");
+                    }
+                },
+                error: function(request, status, error){
+                    alert(" 중복확인 실패 \n code:" + request.status + "\n error :" + error);
+                }
+            });
+        }
+
+        function passwordCheck(){
+            var password = document.getElementById("password").value;
+            var passwordCheck = document.getElementById("passwordCheck").value;
+            if( password != passwordCheck){
+                alert('비밀번호가 일치하지 않습니다.');
+                return false;
+            } else {
+                alert('회원가입에 성공했습니다.');
+                return true;
+            }
+        }
+    </script>
 </head>
 <body>
 <div class="background">
@@ -28,16 +67,19 @@
 
 <!--        <div class="wrapper_body">-->
             <form class="wrapper_body"
-                  action="login.html"
+                  action="v1/members/join"
                   th:action
-                  method="post">
+                  method="post"
+                  onsubmit="return passwordCheck();">
                 <div class="join">회원가입</div>
 
                 <div class="join_content">
                     <div class="content_title">닉네임</div>
                     <div class="content_input">
-                        <input type="text" id="name" name="name" class ="info_id_box" placeholder=" 닉네임을 입력해주세요.">
-                        <div class="id_check">중복확인</div>
+                        <input type="text" id="name" th:name="name" class ="info_id_box" placeholder=" 닉네임을 입력해주세요.">
+                        <button class="id_check"
+                                type="button"
+                                th:onclick="nameCheck()">중복확인</button>
                     </div>
                 </div>
 
@@ -55,10 +97,8 @@
                     </div>
                 </div>
 
-            <button type="button" class="join_button"
-                    id="join_button"
-                    onclick="location.href='login.html'"
-                    th:onclick="|location.href='@{/login}'|">회원가입</button>
+            <button type="submit" class="join_button"
+            th:onclick="passwordCheck()">회원가입</button>
             </form>
 <!--        </div>-->
 
