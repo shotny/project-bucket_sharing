@@ -32,7 +32,6 @@ public class MemberService implements UserDetailsService {
             return false;
         } return true;
     }
-    // 비밀번호 일치 하면 회원가입
 
     public void save(MemberSaveDto dto) {
         dto.setEncodePassword(passwordEncoder.encode(dto.getPassword()));

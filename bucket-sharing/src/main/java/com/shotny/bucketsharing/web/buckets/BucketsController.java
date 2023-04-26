@@ -1,7 +1,5 @@
 package com.shotny.bucketsharing.web.buckets;
 
-import com.shotny.bucketsharing.domain.BucketMembers;
-import com.shotny.bucketsharing.domain.BucketMembersRepository;
 import com.shotny.bucketsharing.domain.buckets.Buckets;
 import com.shotny.bucketsharing.domain.buckets.BucketsRepository;
 import com.shotny.bucketsharing.domain.buckets.dto.BucketSaveDto;
@@ -13,8 +11,6 @@ import com.shotny.bucketsharing.domain.member.Member;
 import com.shotny.bucketsharing.domain.member.MemberRepository;
 import com.shotny.bucketsharing.service.BucketsService;
 import com.shotny.bucketsharing.service.ItemsService;
-import com.shotny.bucketsharing.web.members.form.JoinForm;
-import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -77,7 +73,7 @@ public class BucketsController {
     }
 
 
-    // 아이템 수정
+    // 아이템 수정 폼
     @GetMapping("/{bucketId}/items/edit/{itemId}")
     public String editItemForm(@PathVariable Long bucketId, @PathVariable Long itemId, Model model) {
         Items item = itemsService.findItem(itemId);

@@ -1,5 +1,6 @@
 package com.shotny.bucketsharing.web;
 
+import com.shotny.bucketsharing.domain.member.dto.MemberSaveDto;
 import com.shotny.bucketsharing.service.MemberService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
@@ -18,10 +19,6 @@ public class MemberController {
         return "join";
     }
 
-//    @PostMapping("/nameCheck/{name}")
-//    public int nameCheck(@RequestParam String name){
-//        return memberService.nameCheck(name);
-//    }
 
     @PostMapping("/nameCheck")
     @ResponseBody
@@ -31,11 +28,12 @@ public class MemberController {
     }
 
     @PostMapping("/join")
-    public String join() {
+    public String join(MemberSaveDto memberSaveDto) {
+        System.out.println("name: "+ memberSaveDto.getName());
+        System.out.println("password: "+ memberSaveDto.getPassword());
+        memberService.save(memberSaveDto);
         return "redirect:/v1/members/login";
     }
-
-
 
     @GetMapping("/login")
     public String loginForm() {

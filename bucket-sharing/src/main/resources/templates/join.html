@@ -10,10 +10,15 @@
     <script src="https://code.jquery.com/jquery-3.6.0.js" integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk=" crossorigin="anonymous"></script>
     <script th:inline="javascript">
 
+<!--        var nameChecked = false;-->
+
         function nameCheck(){
+            var form = document.joinForm;
             var name = document.getElementById("name").value;
-            if(name == ""){
+            if(!form.name.value){
                 alert("사용하실 닉네임을 입력해주세요.");
+                form.name.focus();
+                return;
             }
             $.ajax({
                 type: "POST",
@@ -23,27 +28,57 @@
                 success: function (result) {
                     if(result == true){
                         alert("사용 가능한 이름입니다.");
+                        $('.info_id_box').attr("check_result","success");
+                        form.password.focus();
                     } else {
-                        alert(name + ": 이미 사용중인 이름입니다.\n 다른 이름을 사용해주세요.");
+                        alert(name + ": 이미 사용중인 이름입니다.\n다른 이름을 사용해주세요.");
+                        form.name.focus();
                     }
                 },
-                error: function(request, status, error){
-                    alert(" 중복확인 실패 \n code:" + request.status + "\n error :" + error);
+                error: function(request, status){
+                    alert(" 중복확인 실패 \n code:" + request.status);
                 }
             });
         }
 
-        function passwordCheck(){
+        const inputName = document.querySelector('input[name="name"]');
+        function updateName(){
+            nameChecked = false;
+        }
+        inputName.addEventListener('input', function(event){nameChecked = false;});
+
+        function join(){
+            var form = document.joinForm;
+            var name = document.getElementById("name").value;
             var password = document.getElementById("password").value;
             var passwordCheck = document.getElementById("passwordCheck").value;
-            if( password != passwordCheck){
-                alert('비밀번호가 일치하지 않습니다.');
+            name = name.trim();
+            password = password.trim();
+            passwordCheck = passwordCheck.trim();
+
+            $('.info_id_box').change(function() {
+                $('.info_id_box').attr("check_result","fail");
+            })
+
+            if($('.info_id_box').attr("check_result") == "fail"){
+                alert("닉네임 중복확인을 진행해주세요.");
                 return false;
-            } else {
-                alert('회원가입에 성공했습니다.');
+            }
+            if(password.length <=0){
+                alert("사용하실 비밀번호를 입력해주세요.");
+                form.password.focus();
+                return false;
+            }
+            if(password != passwordCheck ){
+                alert("비밀번호가 일치하지 않습니다.");
+                form.passwordCheck.focus();
+                return false;
+            }
+            if(nameCheck && password.length > 0 && password == passwordCheck){
                 return true;
             }
         }
+
     </script>
 </head>
 <body>
@@ -67,16 +102,17 @@
 
 <!--        <div class="wrapper_body">-->
             <form class="wrapper_body"
-                  action="v1/members/join"
+                  name = "joinForm"
                   th:action
                   method="post"
-                  onsubmit="return passwordCheck();">
+                  action="v1/members/join"
+                  onsubmit="return join();">
                 <div class="join">회원가입</div>
 
                 <div class="join_content">
                     <div class="content_title">닉네임</div>
                     <div class="content_input">
-                        <input type="text" id="name" th:name="name" class ="info_id_box" placeholder=" 닉네임을 입력해주세요.">
+                        <input type="text" id="name" th:name="name" class ="info_id_box" placeholder=" 닉네임을 입력해주세요." check_result="fail" required>
                         <button class="id_check"
                                 type="button"
                                 th:onclick="nameCheck()">중복확인</button>
@@ -86,19 +122,18 @@
                 <div class="join_content">
                     <div class="content_title">비밀번호</div>
                     <div class="content_input">
-                        <input type="text" id="password" name="password" class ="info_box" placeholder=" 비밀번호를 입력해주세요.">
+                        <input type="text" id="password" name="password" class ="info_box" placeholder=" 비밀번호를 입력해주세요." required>
                     </div>
                 </div>
 
                 <div class="join_content">
                     <div class="content_title">비밀번호 확인</div>
                     <div class="content_input">
-                        <input type="text" id="passwordCheck" name="passwordCheck" class ="info_box" placeholder=" 비밀번호를 입력해주세요.">
+                        <input type="text" id="passwordCheck" name="passwordCheck" class ="info_box" placeholder=" 비밀번호를 입력해주세요." required>
                     </div>
                 </div>
 
-            <button type="submit" class="join_button"
-            th:onclick="passwordCheck()">회원가입</button>
+            <button type="submit" class="join_button">회원가입</button>
             </form>
 <!--        </div>-->
 
