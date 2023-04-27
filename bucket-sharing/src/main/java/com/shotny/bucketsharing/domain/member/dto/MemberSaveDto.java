@@ -15,7 +15,7 @@ public class MemberSaveDto {
 
     public void setEncodePassword(String encoded) {
         this.password = encoded;
-        System.out.println("password = " + password);
+//        System.out.println("password = " + password);
     }
 
     public Member toEntity() {

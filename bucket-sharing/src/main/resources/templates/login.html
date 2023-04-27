@@ -6,6 +6,36 @@
     <link href="../static/css/login.css"
           th:href="@{/css/login.css}"
           rel="stylesheet">
+
+    <script src="https://code.jquery.com/jquery-3.6.0.js" integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk=" crossorigin="anonymous"></script>
+    <script th:inline="javascript">
+        function login(){
+            var form = document.loginForm;
+            var name = document.getElementById("name").value;
+            var password = document.getElementById("password").value;
+
+            $.ajax({
+                type: "POST",
+                url: "/v1/members/inquiry",
+                data : {"name" : name, "password" : password},
+
+                success: function(result){
+                    if(result == "non_existent"){
+                        alert(name + ": 조회되지 않는 회원입니다.");
+                        form.name.focus();
+                        return false;
+                    } else if(result == "wrong_password"){
+                        alert("비밀번호가 일치하지 않습니다.");
+                        form.password.focus();
+                        return false;
+                    } else { return true; }
+                },
+                error: function(request, status){
+                    alert("code: "+request.status+"\n로그인에 실패했습니다. 잠시후 다시 시도해주세요.");
+                }
+            });
+
+    </script>
 </head>
 <body>
 <div class="background">
@@ -27,27 +57,34 @@
         <div class="wrapper_blank"></div>
         <div class="wrapper_blank"></div>
 
-        <div class="wrapper_body">
+        <form class="wrapper_body"
+              name="loginForm"
+              method="post"
+              th:action
+              action="buckets.html"
+              onsubmit="return login();">
 
             <div class="sign_content">
                 <div class="content_title">닉네임</div>
                 <div class="content_input">
-                    <input id="email" class ="info_box" type="text" placeholder="닉네임을 입력해주세요.">
+                    <input id="name" th:name="name" class ="info_box" type="text" placeholder="닉네임을 입력해주세요." required>
                 </div>
             </div>
 
             <div class="sign_content">
                 <div class="content_title">비밀번호</div>
                 <div class="content_input">
-                    <input id="pwd" class ="info_box" type="text" placeholder="비밀번호를 입력해주세요.">
+                    <input id="password" th:name="password" class ="info_box" type="text" placeholder="비밀번호를 입력해주세요." required>
                 </div>
             </div>
 
             <div class="form_buttons">
-                <div class="sign_button" id="sign_button">로그인</div>
-                <div class="join_button" id="join_button">회원가입</div>
+                <button class="sign_button" id="sign_button" type="submit">로그인</button>
+                <button class="join_button" id="join_button" type="button"
+                     onclick="location.href='join.html'"
+                     th:onclick="|location.href='@{/v1/members/join}'|">회원가입</button>
             </div>
-        </div>
+        </form>
     </div>
 </div>
 </body>
