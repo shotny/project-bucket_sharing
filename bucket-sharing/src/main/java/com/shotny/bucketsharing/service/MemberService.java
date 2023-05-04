@@ -4,7 +4,11 @@ import com.shotny.bucketsharing.domain.member.Member;
 import com.shotny.bucketsharing.domain.member.MemberRepository;
 import com.shotny.bucketsharing.domain.member.dto.LoginDto;
 import com.shotny.bucketsharing.domain.member.dto.MemberSaveDto;
+import com.shotny.bucketsharing.token.Token;
+import com.shotny.bucketsharing.token.TokenRepository;
+import com.shotny.bucketsharing.utils.JwtUtil;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -22,6 +26,12 @@ public class MemberService implements UserDetailsService {
 
     private final MemberRepository memberRepository;
     private final PasswordEncoder passwordEncoder;
+    private final TokenRepository tokenRepository;
+
+    @Value("${jwt.secret}")
+    private String secretKey;
+
+    private Long expireTimeMs = 1000 * 60 * 60L;
 
     public boolean nameCheck(String name) {
         if(memberRepository.findByName(name).isPresent()){
@@ -53,8 +63,21 @@ public class MemberService implements UserDetailsService {
     }
 
     public String login(LoginDto dto) {
+        Member member = memberRepository.findByName(dto.getName())
+                .orElseThrow(() -> new IllegalArgumentException("일치하는 사용자가 없습니다. name: " + dto.getName()));
+        if(!passwordEncoder.matches(member.getPassword(), passwordEncoder.encode(dto.getPassword()))){
+            throw new IllegalArgumentException("비밀번호가 일치하지 않습니다.");
+        }
 
-        return "";
+        String newToken = JwtUtil.createToken(member.getName(), secretKey, expireTimeMs);
+        Optional<Token> savedToken = tokenRepository.findById(member.getToken().getId());
+        if(savedToken.isPresent()){
+            tokenRepository.save(savedToken.get().updateNewToken(newToken));
+        } else  {
+            tokenRepository.save(Token.builder().member(member).token(newToken).status(Token.TokenStatus.Login).build());
+        }
+
+        return newToken;
     }
 
     @Override
