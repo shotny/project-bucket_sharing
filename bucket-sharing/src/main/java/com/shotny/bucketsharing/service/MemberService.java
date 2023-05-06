@@ -39,9 +39,27 @@ public class MemberService implements UserDetailsService {
         } return true;
     }
 
-    public void save(MemberSaveDto dto) {
+    public Member save(MemberSaveDto dto) {
         dto.setEncodePassword(passwordEncoder.encode(dto.getPassword()));
-        memberRepository.save(dto.toEntity());
+        return memberRepository.save(dto.toEntity());
+    }
+
+    public boolean booleaninquiryMember(String name, String password) {
+        // 입력받은 닉네임의 회원을 조회
+        // 조회되는 회원이 없을 경우 non_existent
+        // 조회한 회원의 비밀번호와 입력받은 비밀번호가 일치하지 않을 경우 wrong_password
+        // 조회한 회원의 비밀번호와 입력받은 회원의 비밀번호가 일치하는 경우 토큰 발급
+        Optional<Member> member = memberRepository.findByName(name);
+        if(!member.isPresent()){
+            System.out.println("non_existent");
+            return false;
+        }
+        if (!passwordEncoder.matches(member.get().getPassword(), passwordEncoder.encode(password))) {
+            System.out.println("wrong_password");
+            return false;
+        }
+        System.out.println("success");
+        return true;
     }
 
     public String inquiryMember(String name, String password) {
@@ -65,17 +83,19 @@ public class MemberService implements UserDetailsService {
     public String login(LoginDto dto) {
         Member member = memberRepository.findByName(dto.getName())
                 .orElseThrow(() -> new IllegalArgumentException("일치하는 사용자가 없습니다. name: " + dto.getName()));
-        if(!passwordEncoder.matches(member.getPassword(), passwordEncoder.encode(dto.getPassword()))){
+        if(!passwordEncoder.matches(dto.getPassword(), member.getPassword())){
             throw new IllegalArgumentException("비밀번호가 일치하지 않습니다.");
         }
 
+//        Member member = memberRepository.findByName(dto.getName()).get();
+
         String newToken = JwtUtil.createToken(member.getName(), secretKey, expireTimeMs);
-        Optional<Token> savedToken = tokenRepository.findById(member.getToken().getId());
-        if(savedToken.isPresent()){
-            tokenRepository.save(savedToken.get().updateNewToken(newToken));
-        } else  {
-            tokenRepository.save(Token.builder().member(member).token(newToken).status(Token.TokenStatus.Login).build());
-        }
+//        Optional<Token> savedToken = tokenRepository.findById(member.getToken().getId());
+//        if(savedToken.isPresent()){
+//            tokenRepository.save(savedToken.get().updateNewToken(newToken));
+//        } else  {
+//            tokenRepository.save(Token.builder().member(member).token(newToken).status(Token.TokenStatus.Login).build());
+//        }
 
         return newToken;
     }
