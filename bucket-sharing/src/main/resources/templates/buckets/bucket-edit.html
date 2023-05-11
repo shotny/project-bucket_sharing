@@ -19,22 +19,29 @@
                 <span>동상이물</span>
             </div>
             <div class="header_right">
-                <div class="header_button" id="header_button">Home</div>
+                <button class="header_button" id="header_button"
+                        onclick="location.href='buckets.html'"
+                        th:onclick="|location.href='@{/v1/buckets}'|"
+                        type="button">Home</button>
             </div>
         </div>
 
         <div class="wrapper_blank"></div>
         <div class="wrapper_blank"></div>
 
-        <div class="wrapper_body">
+        <form class="wrapper_body"
+              action="bucket-items.html"
+              th:action
+              method="post">
             <div class="bucket">
 
                 <div class="wrapper_blank"></div>
 
                 <div class="bucket_header">
-                    <div class="bucket_name"> <input class="bucket_name_info" type="text" placeholder="Bucket1"> </div>
+                    <div class="bucket_name">
+                        <input class="bucket_name_info" name="name" type="text" placeholder="Bucket1" th:value="${bucket.name}"> </div>
                     <div class="bucket_count">
-                        <span id="checked">3</span> <span> of </span> <span id="total">12</span>
+<!--                        <span id="checked">3</span> <span> of </span> <span id="total">12</span>-->
                     </div>
                 </div>
 
@@ -44,35 +51,30 @@
                     <div class="item_new">
                         <div class="item_info_box"></div>
                     </div>
-                    <div class="bucket_items">
-                        <div class="checked"><input type="checkbox"></div>
-                        <input class="item_content">바나나</input>
 
+                    <div class="bucket_items" th:each="item : ${items}">
+                        <div class="checked"><input type="checkbox" disabled></div>
+                        <span class="item_content" th:text="${item.content}">바나나</span>
                     </div>
 
-                    <div class="bucket_items">
-                        <div class="checked"><input type="checkbox"></div>
-                        <div class="item_content">바나나</div>
-                    </div>
+                    <div class="wrapper_blank"></div>
 
-                    <div class="bucket_items">
-                        <div class="checked"><input type="checkbox"></div>
-                        <div class="item_content">바나나</div>
+                    <div class="bucket_user">
+                        <div class="user">user1 <button class="user_delete_button">x</button></div>
+                        <div class="user">호루롹휘 <button class="user_delete_button">x</button></div>
                     </div>
-                </div>
-
-                <div class="bucket_user">
-                    <div class="user">user1 <button class="user_delete_button">x</button></div>
-                    <div class="user">호루롹휘 <button class="user_delete_button">x</button></div>
-                    <div class="bucket_share_button"><button class="share_button">SHARE</button></div>
                 </div>
             </div>
+
             <div class="bucket_footer">
-                <div class="bucket_button" id="bucket_share_button">SAVE</div>
+                <button class="bucket_button" id="bucket_edit_button"
+                        onclick="location.href='buckets.html'"
+                        th:onclick="|location.href='@{|/v1/buckets/${bucket.id}/delete'|"
+                        type="button">DELETE</button>
                 <div class="bucket_button_partition"></div>
-                <div class="bucket_button" id="bucket_edit_button">DELETE</div>
+                <button class="bucket_button" id="bucket_share_button" type="submit">SAVE</button>
             </div>
-        </div>
+        </form>
     </div>
 </div>
 

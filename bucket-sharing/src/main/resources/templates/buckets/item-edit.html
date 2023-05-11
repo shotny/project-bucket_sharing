@@ -9,7 +9,10 @@
 </head>
 <body>
     <div class="background">
-        <div class="wrapper">
+        <form class="wrapper"
+              action="bucket-items.html"
+              th:action
+              method="post">
 
             <div class="wrapper_blank"></div>
             <div class="wrapper_blank"></div>
@@ -45,27 +48,15 @@
                     <div class="wrapper_blank"></div>
 
                     <div class="bucket_body">
-                        <div class="item_new">
-                        </div>
+<!--                        <div class="item_new">-->
+                        <div class="wrapper_blank"></div>
+                        <div class="wrapper_blank"></div>
+                    </div>
 
-                        <form class="bucket_items"
-                              action="bucket-items.html"
-                              th:action
-                              method="post">
-
-                            <div class="checked"> <input type="checkbox"> </div>
-
+                        <div class="bucket_items">
+                            <div class="checked"> <input type="checkbox" disabled> </div>
                             <input class="item_content" type="text" th:value="${item.content}" name="content">
-
-                            <div class="item_button_box">
-                                <button class="item_button" id="item_edit" type="submit">수정</button>
-                                <div class="button_partition"></div>
-                                <button class="item_button"
-                                        onclick="location.href='bucket-items.html'"
-                                        th:onclick="|location.href='@{|/v1/buckets/${bucket.id}/items|}'|"
-                                        type="button">취소</button>
-                            </div>
-                        </form>
+                        </div>
                     </div>
 
 <!--                    <div class="bucket_user">-->
@@ -75,12 +66,15 @@
 <!--                    </div>-->
 
                 </div>
-                <div class="bucket_footer">
-<!--                    <div class="bucket_button" id="bucket_share_button">SHARE</div>-->
-<!--                    <div class="bucket_button_partition"></div>-->
-<!--                    <div class="bucket_button" id="bucket_edit_button">EDIT</div>-->
-                </div>
+            <div class="bucket_footer">
+                <button class="bucket_button" id="item_edit" type="submit">수정완료</button>
+                <div class="bucket_button_partition"></div>
+                <button class="bucket_button" id="bucket_edit_button"
+                        onclick="location.href='bucket-items.html'"
+                        th:onclick="|location.href='@{|/v1/buckets/${bucket.id}/items|}'|"
+                        type="button">삭제</button>
             </div>
+            </form>
         </div>
     </div>
 

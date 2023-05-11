@@ -13,10 +13,10 @@ import lombok.Setter;
 public class BucketSaveDto {
     private String name;
 
-    public Buckets toEntity(Long memberId) {
+    public Buckets toEntity(String memberName) {
         return Buckets.builder()
                 .name(name)
-                .ownerId(memberId)
+                .ownerName(memberName)
                 .build();
     }
 }

@@ -5,6 +5,7 @@ import com.shotny.bucketsharing.domain.buckets.BucketsRepository;
 import com.shotny.bucketsharing.domain.buckets.dto.BucketSaveDto;
 import com.shotny.bucketsharing.domain.items.Items;
 import com.shotny.bucketsharing.domain.items.ItemsRepository;
+import com.shotny.bucketsharing.domain.items.ItemsService;
 import com.shotny.bucketsharing.domain.items.dto.ItemResponseDto;
 import com.shotny.bucketsharing.domain.items.dto.ItemSaveDto;
 import com.shotny.bucketsharing.domain.items.dto.ItemUpdateDto;
@@ -24,7 +25,8 @@ class ItemsServiceTest {
     @Autowired
     MemberRepository memberRepository;
     @Autowired BucketsRepository bucketsRepository;
-    @Autowired ItemsService itemsService;
+    @Autowired
+    ItemsService itemsService;
     @Autowired ItemsRepository itemsRepository;
 
     @AfterEach

@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>장바구니 공유 서비스, 동상이물</title>
+    <link href="../../static/css/bucket-edit.css"
+          th:href="@{/css/bucket-edit.css}"
+          rel="stylesheet">
+</head>
+<body>
+<div class="background">
+    <div class="wrapper">
+
+        <div class="wrapper_blank"></div>
+        <div class="wrapper_blank"></div>
+
+        <div class="wrapper_header">
+            <div class="header_left">
+                <span>동상이물</span>
+            </div>
+            <div class="header_right">
+                <div class="header_button" id="header_button">Home</div>
+            </div>
+        </div>
+
+        <div class="wrapper_blank"></div>
+        <div class="wrapper_blank"></div>
+
+        <div class="wrapper_body">
+            <div class="bucket">
+
+                <div class="wrapper_blank"></div>
+
+                <div class="bucket_header">
+                    <div class="bucket_name"> <input class="bucket_name_info" type="text" placeholder="Bucket1"> </div>
+                    <div class="bucket_count">
+                        <span id="checked">3</span> <span> of </span> <span id="total">12</span>
+                    </div>
+                </div>
+
+                <div class="wrapper_blank"></div>
+
+                <div class="bucket_body">
+                    <div class="item_new">
+                        <div class="item_info_box"></div>
+                    </div>
+                    <div class="bucket_items">
+                        <div class="checked"><input type="checkbox"></div>
+                        <input class="item_content">바나나</input>
+
+                    </div>
+
+                    <div class="bucket_items">
+                        <div class="checked"><input type="checkbox"></div>
+                        <div class="item_content">바나나</div>
+                    </div>
+
+                    <div class="bucket_items">
+                        <div class="checked"><input type="checkbox"></div>
+                        <div class="item_content">바나나</div>
+                    </div>
+                </div>
+
+                <div class="bucket_user">
+                    <div class="user">user1 <button class="user_delete_button">x</button></div>
+                    <div class="user">호루롹휘 <button class="user_delete_button">x</button></div>
+                    <div class="bucket_share_button"><button class="share_button">SHARE</button></div>
+                </div>
+            </div>
+            <div class="bucket_footer">
+                <div class="bucket_button" id="bucket_share_button">SAVE</div>
+                <div class="bucket_button_partition"></div>
+                <div class="bucket_button" id="bucket_edit_button">DELETE</div>
+            </div>
+        </div>
+    </div>
+</div>
+
+</body>
+</html>

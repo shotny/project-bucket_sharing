@@ -150,6 +150,7 @@
 
 .item_content{
     margin-left: 12px;
+    border: none;
 }
 
 .item_button_box{
@@ -242,6 +243,8 @@
     font-size: 18px;
     font-weight: 700px;
     color: white;
+    border: none;
+    background: none;
 }
 
 .bucket_button_partition{

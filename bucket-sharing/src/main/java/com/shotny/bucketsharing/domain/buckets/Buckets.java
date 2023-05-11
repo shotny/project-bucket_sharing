@@ -1,6 +1,6 @@
 package com.shotny.bucketsharing.domain.buckets;
 
-import com.shotny.bucketsharing.domain.BucketMembers;
+import com.shotny.bucketsharing.domain.BucketMembers.BucketMembers;
 import com.shotny.bucketsharing.domain.items.Items;
 import lombok.Builder;
 import lombok.Getter;
@@ -23,7 +23,7 @@ public class Buckets {
     private String name;
 
     @Column
-    private Long ownerId;
+    private String ownerName;
 
     @Column
     private int itemCount;
@@ -42,9 +42,9 @@ public class Buckets {
 
 
     @Builder
-    public Buckets(String name, Long ownerId) {
+    public Buckets(String name, String ownerName) {
         this.name = name;
-        this.ownerId = ownerId;
+        this.ownerName = ownerName;
         this.memberCount = 1;
     }
 

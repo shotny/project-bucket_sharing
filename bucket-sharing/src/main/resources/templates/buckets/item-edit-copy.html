@@ -3,34 +3,88 @@
 <head>
     <meta charset="UTF-8">
     <title>장바구니 공유 서비스, 동상이물</title>
-    <link href="../../static/css/bucket-items.css"
-          th:href="@{/css/bucket-items.css}"
+    <link href="../../static/css/item-edit.css"
+          th:href="@{/css/item-edit.css}"
           rel="stylesheet">
-
-    <script th:inline="javascript">
-        function checkItem(bucketId, itemId){
-<!--            alert("hello " + itemId+" & "+bucketId)-->
-
-            let f = document.createElement('form');
-            const url = '/v1/buckets/'+ bucketId+'/items/done/'+itemId;
-            let obj;
-            obj = document.createElement('input');
-            obj.setAttribute('type', 'hidden');
-            obj.setAttribute('name', 'bucketId');
-            obj.setAttribute('value', bucketId);
-            obj.setAttribute('name', 'itemId');
-            obj.setAttribute('value', itemId);
-
-            f.appendChild(obj);
-            f.setAttribute('method', 'post');
-            f.setAttribute('action', url);
-            document.body.appendChild(f);
-            f.submit();
-        }
-    </script>
 </head>
 <body>
     <div class="background">
+        <div class="wrapper">
+
+            <div class="wrapper_blank"></div>
+            <div class="wrapper_blank"></div>
+
+            <div class="wrapper_header">
+                <div class="header_left">
+                    <span>동상이물</span>
+                </div>
+                <div class="header_right">
+                    <button class="header_button" id="header_button"
+                            onclick="location.href='buckets.html'"
+                            th:onclick="|location.href='@{/v1/buckets}'|"
+                            type="button">Home</button>
+                </div>
+            </div>
+
+            <div class="wrapper_blank"></div>
+            <div class="wrapper_blank"></div>
+
+            <div class="wrapper_body">
+                <div class="bucket">
+
+                    <div class="wrapper_blank"></div>
+
+                    <div class="bucket_header">
+                        <span class="bucket_name"
+                              th:text="${bucket.name}">Bucket 1</span>
+                        <div class="bucket_count">
+                            <!--                            <span id="checked" th:text="${bucket.checked}">3</span> <span> of </span> <span id="total" th:text="${bucket.itemCount}">12</span>-->
+                        </div>
+                    </div>
+
+                    <div class="wrapper_blank"></div>
+
+                    <div class="bucket_body">
+                        <!--                        <div class="item_new">-->
+                        <div class="wrapper_blank"></div>
+                        <div class="wrapper_blank"></div>
+                    </div>
+
+                    <form class="bucket_items"
+                          action="bucket-items.html"
+                          th:action
+                          method="post">
+
+                        <div class="checked"> <input type="checkbox"> </div>
+
+                        <input class="item_content" type="text" th:value="${item.content}" name="content">
+
+                        <div class="item_button_box">
+                            <button class="item_button" id="item_edit" type="submit">수정</button>
+                            <div class="button_partition"></div>
+                            <button class="item_button"
+                                    onclick="location.href='bucket-items.html'"
+                                    th:onclick="|location.href='@{|/v1/buckets/${bucket.id}/items|}'|"
+                                    type="button">취소</button>
+                        </div>
+                    </form>
+                </div>
+
+                <!--                    <div class="bucket_user">-->
+                <!--                        <div class="user">user1</div>-->
+                <!--                        <div class="user">호루롹휘 </div>-->
+                <!--                        <div class="bucket_share_button"><button class="share_button">SHARE</button></div>-->
+                <!--                    </div>-->
+
+            </div>
+            <div class="bucket_footer">
+<!--                <div class="bucket_button" id="bucket_share_button">수정완료</div>-->
+<!--                <div class="bucket_button_partition"></div>-->
+<!--                <div class="bucket_button" id="bucket_edit_button">삭제</div>-->
+            </div>
+        </div>
+    </div>
+
         <div class="wrapper">
 
             <div class="wrapper_blank"></div>
@@ -82,8 +136,7 @@
                                        th:checked="${item.checked}">
                             </div>
 
-                            <span class="item_content" th:text="${item.content}">바나나</span>
-<!--                            <input class="item_content" type="text" th:value="${item.content}" name="content" readonly>-->
+                            <input class="item_content" type="text" th:value="${item.content}" name="content" readonly>
 
                             <div class="item_button_box">
                                 <button class="item_button" id="item_edit"
@@ -104,15 +157,12 @@
                     <div class="bucket_user">
                         <div class="user">user1</div>
                         <div class="user">호루롹휘 </div>
-<!--                        <div class="bucket_share_button"><button class="share_button">SHARE</button></div>-->
                     </div>
                 </div>
                 <div class="bucket_footer">
-                    <div class="bucket_button" id="bucket_share_button" >SHARE</div>
+                    <div class="bucket_button" id="bucket_share_button">SHARE</div>
                     <div class="bucket_button_partition"></div>
-                    <button class="bucket_button" id="bucket_edit_button" type="button"
-                            onclick="location.href='bucket-edit.html'"
-                            th:onclick="|location.href='@{|/v1/buckets/${bucket.id}/rename|}'|">EDIT</button>
+                    <div class="bucket_button" id="bucket_edit_button">EDIT</div>
                 </div>
             </div>
         </div>

@@ -5,6 +5,7 @@ import com.shotny.bucketsharing.domain.buckets.BucketsRepository;
 import lombok.Builder;
 import lombok.Getter;
 
+@Getter
 public class BucketResponseDto {
 
     private Long id;
