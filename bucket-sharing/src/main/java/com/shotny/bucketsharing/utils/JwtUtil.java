@@ -8,10 +8,11 @@ import java.util.Date;
 
 public class JwtUtil {
 
-    //토큰 생성
+//    토큰 생성
     public static String createToken(String username, String secretKey, Long expireTimeMs) {
         Claims claims = Jwts.claims();
         claims.put("username", username);
+//        claims.put("username", username);
 
         return Jwts.builder()
                 .setClaims(claims)
