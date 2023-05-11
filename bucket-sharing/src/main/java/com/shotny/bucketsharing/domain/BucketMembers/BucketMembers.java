@@ -1,4 +1,4 @@
-package com.shotny.bucketsharing.domain;
+package com.shotny.bucketsharing.domain.BucketMembers;
 
 import com.shotny.bucketsharing.domain.buckets.Buckets;
 import com.shotny.bucketsharing.domain.member.Member;

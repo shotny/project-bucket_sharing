@@ -1,4 +1,4 @@
-package com.shotny.bucketsharing.service;
+package com.shotny.bucketsharing.domain.member;
 
 import com.shotny.bucketsharing.domain.member.Member;
 import com.shotny.bucketsharing.domain.member.MemberRepository;
@@ -20,6 +20,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import javax.servlet.http.Cookie;
 import java.util.Optional;
 
 @RequiredArgsConstructor
@@ -39,19 +40,9 @@ public class MemberService implements UserDetailsService {
         memberRepository.save(dto.toEntity());
     }
 
-    public boolean matchLoginInfo(LoginDto dto) {
-        boolean result = false;
-        Optional<Member> findMember = findMemberByName(dto.getName());
-        if (findMember.isPresent()) {
-            Member member = findMember.get();
-            if (isRightPassword(dto.getPassword(), member)) {
-                result = true;
-            }
-        }
-        return result;
-    }
 
-    public String matchLoginInfo2(LoginDto dto) {
+
+    public String matchLoginInfo(LoginDto dto) {
         String result = "success";
         Optional<Member> findMember = findMemberByName(dto.getName());
 
@@ -94,9 +85,16 @@ public class MemberService implements UserDetailsService {
         return byName;
     }
 
-    public ResponseCookie setCookieSecure(String refreshToken) {
-        ResponseCookie cookie = ResponseCookie.from("refreshToken", refreshToken)
-                                .maxAge(60*60*24*7) // 7DAYS
+    public Cookie setCookieSecure(Cookie cookie) {
+        cookie.setSecure(true);
+        cookie.isHttpOnly();
+        cookie.setPath("/");
+        return cookie;
+    }
+
+    public ResponseCookie getSecureCookie (String token) {
+        ResponseCookie cookie = ResponseCookie.from("token", token)
+//                                .maxAge(60*60*24*7) // 7DAYS
                                 .path("/")
                                 .secure(true)
                                 .sameSite("None")

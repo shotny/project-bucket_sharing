@@ -1,6 +1,9 @@
 package com.shotny.bucketsharing.domain.member;
 
-import com.shotny.bucketsharing.domain.BucketMembers;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.shotny.bucketsharing.domain.BucketMembers.BucketMembers;
+import com.shotny.bucketsharing.token.Token;
+import com.shotny.bucketsharing.token.TokenRepository;
 import lombok.*;
 
 import javax.persistence.*;
@@ -28,6 +31,10 @@ public class Member {
     @OneToMany(mappedBy = "member")
     private List<BucketMembers> bucketMembers = new ArrayList<>();
 
+    @OneToOne(mappedBy = "member", cascade = CascadeType.ALL)
+    @JsonManagedReference
+    private Token token;
+
     public Member(String name) {
         this.name = name;
     }
@@ -38,8 +45,9 @@ public class Member {
         this.password = password;
     }
 
-    public void updateBucket(boolean isCountUp) {
+    public Member updateBucket(boolean isCountUp) {
         this.bucketsCount = isCountUp ? ++this.bucketsCount : --bucketsCount;
+        return this;
     }
 
 
