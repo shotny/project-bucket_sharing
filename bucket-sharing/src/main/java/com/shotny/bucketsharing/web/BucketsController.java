@@ -92,7 +92,7 @@ public class BucketsController {
 
 
     // 버킷 삭제
-    @PostMapping("/{bucketId}/delete")
+    @GetMapping("/{bucketId}/delete")
     public String updateBucketNameForm(@PathVariable Long bucketId){
         bucketsService.deleteBucket(bucketId);
         return "redirect:/v1/buckets";
